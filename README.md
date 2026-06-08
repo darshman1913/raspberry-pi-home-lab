@@ -3,7 +3,6 @@
 ![Platform](https://img.shields.io/badge/Platform-Raspberry%20Pi%205-red)
 ![License](https://img.shields.io/badge/License-MIT-blue)
 
-\
 
 ## Cybersecurity & Networking Home Lab
 
