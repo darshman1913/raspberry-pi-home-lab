@@ -407,7 +407,7 @@ Add screenshots inside the `screenshots/` folder.
 Shows Pi-hole status, active clients, blocked queries, and blocklist count.
 
 ```md
-![Pi-hole Dashboard Overview](./screenshots/dashboard-overview.png)
+![Pi-hole Dashboard Overview](./dashboard-overview.png)
 ```
 
 ### Query Log
@@ -415,7 +415,7 @@ Shows Pi-hole status, active clients, blocked queries, and blocklist count.
 Shows live DNS requests from devices on the home network.
 
 ```md
-![Pi-hole Query Log](./screenshots/query-log.png)
+![Pi-hole Query Log](./query-log.png)
 ```
 
 ### nslookup Proof
@@ -423,7 +423,7 @@ Shows live DNS requests from devices on the home network.
 Shows `doubleclick.net` returning `0.0.0.0`.
 
 ```md
-![nslookup Blocking Proof](./screenshots/nslookup-proof.png)
+![nslookup Blocking Proof](./nslookup-proof.png)
 ```
 
 ---
