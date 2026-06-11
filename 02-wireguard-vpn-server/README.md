@@ -494,7 +494,7 @@ Store screenshots here:
 
 ### iPhone Connection
 
-![iPhone WireGuard Connection](./wireguard-iphone-connected.png)
+![iPhone WireGuard Connection](./wireguard-iphone-connected.jpeg)
 
 ### Pi-hole VPN Clients
 
