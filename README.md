@@ -43,13 +43,15 @@ This gives me a real environment to practice DNS, DHCP, Linux administration, ro
 | Status     | Project                           | Description                                                          | Key Tools                                        | Link                                     |
 | ---------- | --------------------------------- | -------------------------------------------------------------------- | ------------------------------------------------ | ---------------------------------------- |
 | ✅ Done     | 01 - Pi-hole DNS Sinkhole         | Network-wide DNS filtering and DHCP setup using Raspberry Pi 5       | Pi-hole, Raspberry Pi OS, Linux, Verizon CR1000A | [View Project](./01-pihole-dns-sinkhole) |
-| 🔜 Planned | 02 - WireGuard VPN Server         | Secure remote access into the home lab network                       | WireGuard, Linux, UDP, Port Forwarding           | Coming soon                              |
+| ✅ Done     | 02 - WireGuard VPN Server         | Secure remote access into the home lab network                       | WireGuard, Linux, UDP, Port Forwarding           | [View Project](./02-wireguard-vpn-server) |
 | 🔜 Planned | 03 - Honeypot with Cowrie         | SSH honeypot to study attacker behavior and collect logs safely      | Cowrie, Python, SSH, Linux Logs                  | Coming soon                              |
 | 🔜 Planned | 04 - IDS with Suricata            | Intrusion detection system for monitoring suspicious network traffic | Suricata, PCAP, Rules, Alerts                    | Coming soon                              |
 | 🔜 Planned | 05 - Centralized SIEM             | Central log collection and dashboarding for lab security events      | ELK Stack, Elasticsearch, Logstash, Kibana       | Coming soon                              |
 | 🔜 Planned | 06 - Active Directory Lab         | Windows domain lab for learning enterprise identity and security     | Windows Server, AD DS, DNS, Group Policy         | Coming soon                              |
 | 🔜 Planned | 07 - Network Monitoring with Zeek | Network traffic analysis and protocol logging                        | Zeek, Linux, Network Logs                        | Coming soon                              |
 
+
+lets update
 ---
 
 ## Skills I Am Building
