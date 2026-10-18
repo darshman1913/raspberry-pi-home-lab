@@ -1,0 +1,66 @@
+[project]
+site_name = "Raspberry Pi Home Lab"
+site_url = "https://darshman1913.github.io/raspberry-pi-home-lab/"
+site_description = "Hands-on cybersecurity and networking home lab on a Raspberry Pi 5."
+site_author = "Maankumar Patel"
+copyright = "MIT licensed. Built, broken, and fixed by Maankumar Patel."
+docs_dir = "docs"
+site_dir = "site"
+dev_addr = "localhost:8000"
+
+nav = [
+  { "Home" = "index.md" },
+  { "Tutorials" = [
+    "tutorials/index.md",
+    { "01 - Pi-hole DNS Sinkhole" = "tutorials/01-pihole-dns-sinkhole.md" },
+    { "02 - WireGuard VPN Server" = "tutorials/02-wireguard-vpn-server.md" },
+    { "03 - Cowrie SSH Honeypot" = "tutorials/03-cowrie-honeypot.md" },
+  ] },
+  { "How-to" = [
+    "how-to/index.md",
+    { "Restore DHCP to the Verizon router" = "how-to/restore-router-dhcp.md" },
+    { "Add a blocklist to Pi-hole" = "how-to/add-blocklist.md" },
+    { "Force clients to renew DHCP leases" = "how-to/renew-client-leases.md" },
+    { "Add a WireGuard peer" = "how-to/add-wireguard-peer.md" },
+    { "Restart Cowrie safely" = "how-to/restart-cowrie.md" },
+  ] },
+  { "Reference" = [
+    "reference/index.md",
+    { "Network map" = "reference/network.md" },
+    { "Versions and hardware" = "reference/versions.md" },
+    { "Command reference" = "reference/commands.md" },
+  ] },
+  { "Explanation" = [
+    "explanation/index.md",
+    { "How DNS filtering actually works" = "explanation/how-dns-filtering-works.md" },
+    { "Why Pi-hole took over DHCP" = "explanation/why-pihole-runs-dhcp.md" },
+    { "Why the diagrams are code" = "explanation/why-diagrams-are-code.md" },
+  ] },
+  { "Decision log" = [
+    "decisions/index.md",
+    { "0001 - DHCP moves to Pi-hole" = "decisions/0001-dhcp-on-pihole.md" },
+    { "0002 - Diagrams are python files" = "decisions/0002-diagrams-as-code.md" },
+    { "0003 - Docs are a build artifact" = "decisions/0003-docs-as-code.md" },
+  ] },
+  { "GitHub" = "https://github.com/darshman1913/raspberry-pi-home-lab" },
+]
+
+[project.theme]
+features = [
+  "navigation.tabs",
+  "navigation.sections",
+  "navigation.top",
+  "navigation.indexes",
+  "toc.follow",
+  "search.highlight",
+]
+
+[[project.theme.palette]]
+scheme = "default"
+toggle.icon = "material/brightness-7"
+toggle.name = "Switch to dark mode"
+
+[[project.theme.palette]]
+scheme = "slate"
+toggle.icon = "material/brightness-4"
+toggle.name = "Switch to light mode"
