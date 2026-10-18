@@ -1,10 +1,14 @@
 # 02 - WireGuard VPN Server
 
-## Project Status
+---
+
+## Goal
+
+### Project Status
 
 ✅ Completed
 
-## Project Summary
+### Project Summary
 
 This project documents the deployment of a self-hosted WireGuard VPN server running on a Raspberry Pi 5 as part of my cybersecurity home lab.
 
@@ -14,30 +18,7 @@ The VPN allows me to securely connect back to my home network from anywhere usin
 
 The completed solution provides secure remote access to the home network using WireGuard while integrating Pi-hole DNS filtering and encrypted client connectivity.
 
----
-
-# Lab Environment
-
-| Component           | Details                         |
-| ------------------- | ------------------------------- |
-| Hardware            | Raspberry Pi 5                  |
-| Operating System    | Raspberry Pi OS 64-bit (Debian) |
-| WireGuard Version   | 1.0.20210914                    |
-| Router              | Verizon CR1000A                 |
-| Server LAN IP       | 192.168.1.165                   |
-| VPN Tunnel Network  | 10.0.0.0/24                     |
-| WireGuard Server IP | 10.0.0.1                        |
-| Listen Port         | UDP 51820                       |
-| VPN DNS Server      | Pi-hole (192.168.1.165)         |
-| Routing Mode        | Full Tunnel                     |
-| Windows Client IP   | 10.0.0.2                        |
-| iPhone Client IP    | 10.0.0.3                        |
-| Public IP           | Redacted                        |
-| Remote Access       | WireGuard VPN                   |
-
----
-
-# Project Goal
+### Project Goal
 
 The objectives of this project were:
 
@@ -51,9 +32,83 @@ The objectives of this project were:
 * Practice Linux networking and troubleshooting
 * Create reusable documentation
 
+### What WireGuard Does
+
+WireGuard creates an encrypted tunnel between a remote device and my home network.
+
+Instead of exposing services like SSH directly to the internet, I connect to WireGuard first.
+
+Once connected:
+
+```text
+Laptop → WireGuard Tunnel → Home Network
+```
+
+or
+
+```text
+Phone → WireGuard Tunnel → Home Network
+```
+
+This allows me to:
+
+* SSH into Raspberry Pi
+* Access Pi-hole dashboard
+* Use Pi-hole DNS filtering remotely
+* Secure traffic on public Wi-Fi
+* Access future home lab services
+
+### Key Management
+
+One of the biggest concepts I learned was how WireGuard uses public/private key cryptography.
+
+Every device gets:
+
+```text
+Private Key
+Public Key
+```
+
+##### Server
+
+```text
+Server Private Key
+Server Public Key
+```
+
+##### Windows Laptop
+
+```text
+Laptop Private Key
+Laptop Public Key
+```
+
+##### iPhone
+
+```text
+Phone Private Key
+Phone Public Key
+```
+
+Important:
+
+* Private keys never leave the device
+* Public keys can be shared
+* WireGuard peers identify each other using public keys
+* If a private key leaks, regenerate the keypair immediately
+
+Think of it like:
+
+```text
+Public Key  = username
+Private Key = password
+```
+
+except much stronger cryptographically.
+
 ---
 
-# Network Architecture
+## Diagram
 
 Final working design:
 
@@ -109,87 +164,9 @@ Home Network Resources
 
 ---
 
-# What WireGuard Does
+## Setup
 
-WireGuard creates an encrypted tunnel between a remote device and my home network.
-
-Instead of exposing services like SSH directly to the internet, I connect to WireGuard first.
-
-Once connected:
-
-```text
-Laptop → WireGuard Tunnel → Home Network
-```
-
-or
-
-```text
-Phone → WireGuard Tunnel → Home Network
-```
-
-This allows me to:
-
-* SSH into Raspberry Pi
-* Access Pi-hole dashboard
-* Use Pi-hole DNS filtering remotely
-* Secure traffic on public Wi-Fi
-* Access future home lab services
-
----
-
-# Key Management
-
-One of the biggest concepts I learned was how WireGuard uses public/private key cryptography.
-
-Every device gets:
-
-```text
-Private Key
-Public Key
-```
-
-### Server
-
-```text
-Server Private Key
-Server Public Key
-```
-
-### Windows Laptop
-
-```text
-Laptop Private Key
-Laptop Public Key
-```
-
-### iPhone
-
-```text
-Phone Private Key
-Phone Public Key
-```
-
-Important:
-
-* Private keys never leave the device
-* Public keys can be shared
-* WireGuard peers identify each other using public keys
-* If a private key leaks, regenerate the keypair immediately
-
-Think of it like:
-
-```text
-Public Key  = username
-Private Key = password
-```
-
-except much stronger cryptographically.
-
----
-
-# Installation and Configuration
-
-## Step 1 - Update Raspberry Pi
+### Step 1 - Update Raspberry Pi
 
 ```bash
 sudo apt update
@@ -204,7 +181,7 @@ sudo reboot
 
 ---
 
-## Step 2 - Install WireGuard
+### Step 2 - Install WireGuard
 
 Install WireGuard and networking tools.
 
@@ -221,7 +198,7 @@ Packages installed:
 
 ---
 
-## Step 3 - Generate Server Keys
+### Step 3 - Generate Server Keys
 
 Create WireGuard key directory:
 
@@ -244,7 +221,7 @@ sudo cat server_public.key
 
 ---
 
-## Step 4 - Generate Laptop Keys
+### Step 4 - Generate Laptop Keys
 
 ```bash
 sudo wg genkey | sudo tee laptop_private.key | wg pubkey | sudo tee laptop_public.key
@@ -252,15 +229,13 @@ sudo wg genkey | sudo tee laptop_private.key | wg pubkey | sudo tee laptop_publi
 
 ---
 
-## Step 5 - Generate Phone Keys
+### Step 5 - Generate Phone Keys
 
 ```bash
 sudo wg genkey | sudo tee phone_private.key | wg pubkey | sudo tee phone_public.key
 ```
 
----
-
-# Enable IP Forwarding
+### Enable IP Forwarding
 
 WireGuard must be able to forward packets between networks.
 
@@ -302,9 +277,7 @@ Expected:
 net.ipv4.ip_forward = 1
 ```
 
----
-
-# Configure WireGuard Server
+### Configure WireGuard Server
 
 Create:
 
@@ -337,9 +310,7 @@ PublicKey = PHONE_PUBLIC_KEY
 AllowedIPs = 10.0.0.3/32
 ```
 
----
-
-# Configure Windows Client
+### Configure Windows Client
 
 Create:
 
@@ -358,9 +329,7 @@ PersistentKeepalive = 25
 
 Import into WireGuard Windows application.
 
----
-
-# Configure iPhone Client
+### Configure iPhone Client
 
 Create:
 
@@ -385,9 +354,7 @@ qrencode -t ansiutf8 < iphone.conf
 
 Scan with WireGuard iOS app.
 
----
-
-# Configure Verizon Router
+### Configure Verizon Router
 
 Create a UDP port forward.
 
@@ -399,9 +366,7 @@ Destination IP: 192.168.1.165
 
 This forwards incoming VPN traffic to the Raspberry Pi.
 
----
-
-# Start WireGuard
+### Start WireGuard
 
 Enable service:
 
@@ -421,9 +386,7 @@ Verify:
 sudo systemctl status wg-quick@wg0
 ```
 
----
-
-# Verify VPN Operation
+### Verify VPN Operation
 
 Check active tunnel:
 
@@ -441,9 +404,7 @@ transfer:
 
 Handshakes should appear after client connection.
 
----
-
-# Verify Pi-hole Through VPN
+### Verify Pi-hole Through VPN
 
 Connect from phone or laptop.
 
@@ -461,9 +422,7 @@ DNS server should show:
 
 This confirms VPN traffic uses Pi-hole.
 
----
-
-# SSH Through VPN
+### SSH Through VPN
 
 Once connected:
 
@@ -475,7 +434,7 @@ This allows management of the Raspberry Pi through the encrypted tunnel.
 
 ---
 
-# Screenshots
+## Screenshots
 
 Store screenshots here:
 
@@ -488,39 +447,39 @@ Store screenshots here:
 └── wg-show-output.png
 ```
 
-### Windows Connection
+#### Windows Connection
 
 ![Windows WireGuard Connection](../assets/screenshots/02-wireguard/wireguard-windows-connected.png)
 
-### iPhone Connection
+#### iPhone Connection
 
 ![iPhone WireGuard Connection](../assets/screenshots/02-wireguard/wireguard-iphone-connected.jpeg)
 
-### Pi-hole VPN Clients
+#### Pi-hole VPN Clients
 
 ![Pi-hole VPN DNS Clients](../assets/screenshots/02-wireguard/pihole-vpn-clients.png)
 
-### wg show Output
+#### wg show Output
 
 ![WireGuard Status](../assets/screenshots/02-wireguard/wg-show-output.png)
 
 ---
 
-# Challenges and Fixes
+## Problems and Fixes
 
 The following issues were encountered during deployment and the steps used to resolve them.
 
 ---
 
-## Challenge 1 - iptables Was Not Installed
+### Challenge 1 - iptables Was Not Installed
 
-### Problem
+#### Problem
 
 WireGuard PostUp/PostDown rules failed.
 
 Error messages indicated iptables commands were unavailable.
 
-### Fix
+#### Fix
 
 Install manually:
 
@@ -528,7 +487,7 @@ Install manually:
 sudo apt install iptables
 ```
 
-### What I Learned
+#### What I Learned
 
 Not every networking package is installed by default.
 
@@ -536,9 +495,9 @@ Always verify dependencies.
 
 ---
 
-## Challenge 2 - Permission Denied Creating Keys
+### Challenge 2 - Permission Denied Creating Keys
 
-### Problem
+#### Problem
 
 Running:
 
@@ -548,7 +507,7 @@ wg genkey
 
 generated permission errors.
 
-### Fix
+#### Fix
 
 Use sudo.
 
@@ -556,7 +515,7 @@ Use sudo.
 sudo wg genkey
 ```
 
-### What I Learned
+#### What I Learned
 
 WireGuard stores sensitive cryptographic material in protected directories.
 
@@ -564,9 +523,9 @@ Linux permissions matter.
 
 ---
 
-## Challenge 3 - sysctl.conf Did Not Exist
+### Challenge 3 - sysctl.conf Did Not Exist
 
-### Problem
+#### Problem
 
 Many tutorials reference:
 
@@ -576,7 +535,7 @@ Many tutorials reference:
 
 but it did not exist on my Raspberry Pi OS installation.
 
-### Fix
+#### Fix
 
 Used:
 
@@ -586,15 +545,15 @@ Used:
 
 instead.
 
-### What I Learned
+#### What I Learned
 
 Modern Linux systems may use modular configuration directories instead of a single file.
 
 ---
 
-## Challenge 4 - SSH Disconnects After WireGuard Starts
+### Challenge 4 - SSH Disconnects After WireGuard Starts
 
-### Problem
+#### Problem
 
 After activating WireGuard:
 
@@ -606,7 +565,7 @@ my SSH session disconnected.
 
 At first I thought WireGuard broke networking.
 
-### Fix
+#### Fix
 
 Reconnect using:
 
@@ -616,7 +575,7 @@ ssh username@10.0.0.1
 
 through the VPN tunnel.
 
-### What I Learned
+#### What I Learned
 
 VPN tunnels change routing behavior.
 
@@ -624,13 +583,13 @@ A dropped SSH session does not automatically mean the service failed.
 
 ---
 
-## Challenge 5 - WireGuard Restart Kicks You Out
+### Challenge 5 - WireGuard Restart Kicks You Out
 
-### Problem
+#### Problem
 
 Restarting WireGuard immediately terminates active sessions.
 
-### Fix
+#### Fix
 
 Be prepared to reconnect using either:
 
@@ -646,15 +605,15 @@ or
 
 depending on where you are connected from.
 
-### What I Learned
+#### What I Learned
 
 Always think about how network changes affect active management sessions.
 
 ---
 
-## Challenge 6 - Router Port Forwarding Verification
+### Challenge 6 - Router Port Forwarding Verification
 
-### Problem
+#### Problem
 
 Initially no handshake appeared.
 
@@ -664,7 +623,7 @@ sudo wg show
 
 showed no activity.
 
-### Fix
+#### Fix
 
 Reviewed Verizon CR1000A port forwarding configuration.
 
@@ -678,13 +637,80 @@ UDP
 
 After correcting configuration, handshakes appeared.
 
-### What I Learned
+#### What I Learned
 
 VPN issues are often firewall or router issues rather than WireGuard issues.
 
 ---
 
-# Final Working Results
+## Lessons Learned
+
+### Conclusion
+
+This WireGuard project transformed my Raspberry Pi from a local DNS server into a secure remote-access gateway.
+
+The final system allows encrypted connections from both my Windows laptop and iPhone, routes all traffic through the VPN tunnel, uses Pi-hole for DNS filtering, and provides secure access to my home lab from anywhere.
+
+The deployment required configuration and validation of routing, port forwarding, key management, Linux networking, DNS integration, and SSH connectivity to achieve a fully operational remote-access solution.
+
+---
+
+## Skills Demonstrated
+
+This project demonstrates:
+
+* Linux Administration
+* WireGuard Deployment
+* VPN Configuration
+* Public Key Infrastructure Concepts
+* Router Port Forwarding
+* DNS Integration
+* Pi-hole Integration
+* SSH Administration
+* Network Troubleshooting
+* Technical Documentation
+* Remote Access Architecture
+* Security Best Practices
+
+---
+
+## Next Steps
+
+Planned improvements:
+
+* Add additional WireGuard clients
+* Create client onboarding documentation
+* Implement VPN monitoring
+* Integrate VPN logs into ELK Stack
+* Create VPN access policies
+* Add multi-site VPN experiments
+* Explore split-tunnel configurations
+* Use WireGuard to securely manage future lab services
+
+---
+
+## Lab Environment
+
+| Component           | Details                         |
+| ------------------- | ------------------------------- |
+| Hardware            | Raspberry Pi 5                  |
+| Operating System    | Raspberry Pi OS 64-bit (Debian) |
+| WireGuard Version   | 1.0.20210914                    |
+| Router              | Verizon CR1000A                 |
+| Server LAN IP       | 192.168.1.165                   |
+| VPN Tunnel Network  | 10.0.0.0/24                     |
+| WireGuard Server IP | 10.0.0.1                        |
+| Listen Port         | UDP 51820                       |
+| VPN DNS Server      | Pi-hole (192.168.1.165)         |
+| Routing Mode        | Full Tunnel                     |
+| Windows Client IP   | 10.0.0.2                        |
+| iPhone Client IP    | 10.0.0.3                        |
+| Public IP           | Redacted                        |
+| Remote Access       | WireGuard VPN                   |
+
+---
+
+## Final Working Results
 
 | Item                    | Status |
 | ----------------------- | ------ |
@@ -700,57 +726,57 @@ VPN issues are often firewall or router issues rather than WireGuard issues.
 
 ---
 
-# Commands Reference
+## Commands Reference
 
-### Show Status
+#### Show Status
 
 ```bash
 sudo wg show
 ```
 
-### Start WireGuard
+#### Start WireGuard
 
 ```bash
 sudo systemctl start wg-quick@wg0
 ```
 
-### Stop WireGuard
+#### Stop WireGuard
 
 ```bash
 sudo systemctl stop wg-quick@wg0
 ```
 
-### Restart WireGuard
+#### Restart WireGuard
 
 ```bash
 sudo systemctl restart wg-quick@wg0
 ```
 
-### Enable at Boot
+#### Enable at Boot
 
 ```bash
 sudo systemctl enable wg-quick@wg0
 ```
 
-### Check Service
+#### Check Service
 
 ```bash
 sudo systemctl status wg-quick@wg0
 ```
 
-### Show IP Forwarding
+#### Show IP Forwarding
 
 ```bash
 sysctl net.ipv4.ip_forward
 ```
 
-### View Configuration
+#### View Configuration
 
 ```bash
 sudo cat /etc/wireguard/wg0.conf
 ```
 
-### Generate QR Code
+#### Generate QR Code
 
 ```bash
 qrencode -t ansiutf8 < iphone.conf
@@ -758,7 +784,7 @@ qrencode -t ansiutf8 < iphone.conf
 
 ---
 
-# Security Notes
+## Security Notes
 
 Never share:
 
@@ -780,49 +806,3 @@ If a private key is exposed:
 1. Generate a new keypair
 2. Update peer configuration
 3. Remove compromised key immediately
-
----
-
-
-# Skills Demonstrated
-
-This project demonstrates:
-
-* Linux Administration
-* WireGuard Deployment
-* VPN Configuration
-* Public Key Infrastructure Concepts
-* Router Port Forwarding
-* DNS Integration
-* Pi-hole Integration
-* SSH Administration
-* Network Troubleshooting
-* Technical Documentation
-* Remote Access Architecture
-* Security Best Practices
-
----
-
-
-# Next Steps
-
-Planned improvements:
-
-* Add additional WireGuard clients
-* Create client onboarding documentation
-* Implement VPN monitoring
-* Integrate VPN logs into ELK Stack
-* Create VPN access policies
-* Add multi-site VPN experiments
-* Explore split-tunnel configurations
-* Use WireGuard to securely manage future lab services
-
----
-
-# Conclusion
-
-This WireGuard project transformed my Raspberry Pi from a local DNS server into a secure remote-access gateway.
-
-The final system allows encrypted connections from both my Windows laptop and iPhone, routes all traffic through the VPN tunnel, uses Pi-hole for DNS filtering, and provides secure access to my home lab from anywhere.
-
-The deployment required configuration and validation of routing, port forwarding, key management, Linux networking, DNS integration, and SSH connectivity to achieve a fully operational remote-access solution.

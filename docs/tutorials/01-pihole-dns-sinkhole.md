@@ -1,10 +1,14 @@
 # 01 - Pi-hole DNS Sinkhole
 
-## Project Status
+---
+
+## Goal
+
+### Project Status
 
 ✅ Completed
 
-## Project Summary
+### Project Summary
 
 This project documents my first completed cybersecurity home lab build: a Pi-hole DNS sinkhole running on a Raspberry Pi 5.
 
@@ -14,29 +18,7 @@ This project became more than just a basic Pi-hole install because my Verizon CR
 
 This gave me hands-on practice with DNS, DHCP, Linux, SSH, static IP configuration, router troubleshooting, and real home network problem solving.
 
----
-
-## Lab Environment
-
-| Component             | Details                                |
-| --------------------- | -------------------------------------- |
-| Hardware              | Raspberry Pi 5                         |
-| Operating System      | Raspberry Pi OS 64-bit based on Debian |
-| Router                | Verizon CR1000A                        |
-| Management Device     | Windows laptop                         |
-| Pi-hole Core          | v6.4.2                                 |
-| Pi-hole FTL           | v6.6.2                                 |
-| Pi-hole Web Interface | v6.5                                   |
-| Upstream DNS          | Cloudflare `1.1.1.1` with DNSSEC       |
-| Blocklist Size        | 83,497 domains                         |
-| Active Clients        | 5 devices                              |
-| Blocking Rate         | Around 8% to 45% of DNS traffic        |
-| Pi Static IP          | `192.168.1.165`                        |
-| Remote Access         | SSH from Windows laptop                |
-
----
-
-## Project Goal
+### Project Goal
 
 The main goal of this project was to build a working DNS sinkhole inside my home network using a Raspberry Pi 5.
 
@@ -55,7 +37,7 @@ This was not just a “copy and paste install.” I had to troubleshoot SSH, use
 
 ---
 
-## Network Architecture
+## Diagram
 
 Final working setup:
 
@@ -79,26 +61,6 @@ Final working setup:
       Client 1     Client 2   Client 3     Clients 4-5
 ```
 
-### How DNS Works in This Setup
-
-```text
-Home Device
-   |
-   | DNS request
-   v
-Pi-hole on Raspberry Pi 5
-   |
-   | If domain is blocked:
-   | returns 0.0.0.0
-   |
-   | If domain is allowed:
-   v
-Cloudflare DNS 1.1.1.1
-   |
-   v
-Internet
-```
-
 ### How DHCP Works in This Setup
 
 ```text
@@ -118,25 +80,7 @@ Device now uses Pi-hole automatically
 
 ---
 
-## Why Pi-hole Is Also Running DHCP
-
-Originally, I wanted the Verizon CR1000A router to keep handling DHCP while simply pointing all devices to Pi-hole for DNS.
-
-That did not work properly.
-
-The router did not give me reliable control over custom DNS settings for client devices. Even after changing settings, devices were still not consistently using Pi-hole for DNS.
-
-The workaround was to:
-
-1. Enable DHCP inside Pi-hole
-2. Disable DHCP on the Verizon CR1000A router
-3. Let Pi-hole hand out IP addresses and DNS settings
-
-This solved the problem because every device now receives the Raspberry Pi as its DNS server automatically.
-
----
-
-## Setup Steps
+## Setup
 
 ### 1. Enabled SSH on Raspberry Pi OS
 
@@ -425,10 +369,9 @@ Shows `doubleclick.net` returning `0.0.0.0`.
 
 ![nslookup Blocking Proof](../assets/screenshots/01-pihole/nslookup-proof.png)
 
-
 ---
 
-## Challenges and Fixes
+## Problems and Fixes
 
 This was the most important part of the project because the setup did not work perfectly the first time.
 
@@ -621,6 +564,123 @@ I learned that troubleshooting is a real skill. The best method is to test one t
 
 ---
 
+## Lessons Learned
+
+This project helped me understand several important networking and cybersecurity concepts.
+
+### DNS
+
+I learned how devices use DNS to turn domain names into IP addresses. I also learned how DNS filtering works by blocking unwanted domains before they resolve.
+
+### DHCP
+
+I learned how DHCP gives devices IP addresses, gateway information, and DNS server information. This became very important when I had to move DHCP from my Verizon router to Pi-hole.
+
+### SSH
+
+I learned how to remotely manage a Linux device from a Windows laptop using SSH.
+
+### Linux
+
+I practiced basic Linux administration, including updating packages, editing configuration files, checking services, and rebooting safely.
+
+### Static IP Addresses
+
+I learned why servers and infrastructure devices need static IP addresses. If the DNS server changes IP addresses, the network can break.
+
+### Router Limitations
+
+I learned that ISP routers do not always give full control. Sometimes the best solution is to work around those limitations safely.
+
+### Troubleshooting
+
+The biggest lesson was troubleshooting. I had to test SSH, IP addresses, DHCP leases, DNS resolution, and client settings before everything worked correctly.
+
+### Conclusion
+
+This Pi-hole project was my first real cybersecurity home lab project on the Raspberry Pi 5.
+
+It started as a simple DNS sinkhole install, but became a much better learning experience because of the problems I had to solve with SSH, static IP configuration, router limitations, DHCP migration, and DNS testing.
+
+The final result is a working network-wide DNS filtering system where all home devices route through Pi-hole, and blocked domains like `doubleclick.net` return `0.0.0.0`.
+
+This project gave me a strong foundation for the next home lab projects, including WireGuard VPN, Cowrie honeypot, Suricata IDS, ELK SIEM, Active Directory, and Zeek network monitoring.
+
+---
+
+## Skills Demonstrated
+
+This project demonstrates the following skills for a cybersecurity or networking portfolio:
+
+* Raspberry Pi server setup
+* Linux command line usage
+* SSH remote administration
+* DNS configuration
+* DHCP server configuration
+* Static IP configuration
+* Home router troubleshooting
+* Network-wide ad and tracker blocking
+* DNS sinkhole deployment
+* Client network testing
+* Windows networking commands
+* Technical documentation
+* Troubleshooting and problem solving
+
+---
+
+## Resume/Portfolio Value
+
+This project shows that I can do more than follow a tutorial.
+
+I configured a real device on a real home network, ran into real router limitations, and solved the problem by changing the network design.
+
+Important real-world skills shown in this project:
+
+* Understanding how DNS and DHCP work together
+* Troubleshooting network connectivity issues
+* Documenting technical problems clearly
+* Using Linux as a network service host
+* Validating results with command-line tools
+* Building a working security lab from basic hardware
+
+---
+
+## Next Steps
+
+Planned improvements:
+
+* Add more curated blocklists
+* Create local DNS records for home lab services
+* Add screenshots to this README
+* Export Pi-hole query data for analysis
+* Monitor top blocked domains
+* Add WireGuard VPN access to manage the lab remotely
+* Use Pi-hole logs later inside a SIEM project
+* Compare DNS traffic before and after adding more devices
+* Document common blocked domains and false positives
+
+---
+
+## Lab Environment
+
+| Component             | Details                                |
+| --------------------- | -------------------------------------- |
+| Hardware              | Raspberry Pi 5                         |
+| Operating System      | Raspberry Pi OS 64-bit based on Debian |
+| Router                | Verizon CR1000A                        |
+| Management Device     | Windows laptop                         |
+| Pi-hole Core          | v6.4.2                                 |
+| Pi-hole FTL           | v6.6.2                                 |
+| Pi-hole Web Interface | v6.5                                   |
+| Upstream DNS          | Cloudflare `1.1.1.1` with DNSSEC       |
+| Blocklist Size        | 83,497 domains                         |
+| Active Clients        | 5 devices                              |
+| Blocking Rate         | Around 8% to 45% of DNS traffic        |
+| Pi Static IP          | `192.168.1.165`                        |
+| Remote Access         | SSH from Windows laptop                |
+
+---
+
 ## Final Working Results
 
 Current working status:
@@ -755,90 +815,43 @@ Address: 0.0.0.0
 
 ---
 
-## What I Learned
+## How DNS Works in This Setup
 
-This project helped me understand several important networking and cybersecurity concepts.
-
-### DNS
-
-I learned how devices use DNS to turn domain names into IP addresses. I also learned how DNS filtering works by blocking unwanted domains before they resolve.
-
-### DHCP
-
-I learned how DHCP gives devices IP addresses, gateway information, and DNS server information. This became very important when I had to move DHCP from my Verizon router to Pi-hole.
-
-### SSH
-
-I learned how to remotely manage a Linux device from a Windows laptop using SSH.
-
-### Linux
-
-I practiced basic Linux administration, including updating packages, editing configuration files, checking services, and rebooting safely.
-
-### Static IP Addresses
-
-I learned why servers and infrastructure devices need static IP addresses. If the DNS server changes IP addresses, the network can break.
-
-### Router Limitations
-
-I learned that ISP routers do not always give full control. Sometimes the best solution is to work around those limitations safely.
-
-### Troubleshooting
-
-The biggest lesson was troubleshooting. I had to test SSH, IP addresses, DHCP leases, DNS resolution, and client settings before everything worked correctly.
+```text
+Home Device
+   |
+   | DNS request
+   v
+Pi-hole on Raspberry Pi 5
+   |
+   | If domain is blocked:
+   | returns 0.0.0.0
+   |
+   | If domain is allowed:
+   v
+Cloudflare DNS 1.1.1.1
+   |
+   v
+Internet
+```
 
 ---
 
-## Skills Demonstrated
+## Why Pi-hole Is Also Running DHCP
 
-This project demonstrates the following skills for a cybersecurity or networking portfolio:
+Originally, I wanted the Verizon CR1000A router to keep handling DHCP while simply pointing all devices to Pi-hole for DNS.
 
-* Raspberry Pi server setup
-* Linux command line usage
-* SSH remote administration
-* DNS configuration
-* DHCP server configuration
-* Static IP configuration
-* Home router troubleshooting
-* Network-wide ad and tracker blocking
-* DNS sinkhole deployment
-* Client network testing
-* Windows networking commands
-* Technical documentation
-* Troubleshooting and problem solving
+That did not work properly.
 
----
+The router did not give me reliable control over custom DNS settings for client devices. Even after changing settings, devices were still not consistently using Pi-hole for DNS.
 
-## Resume/Portfolio Value
+The workaround was to:
 
-This project shows that I can do more than follow a tutorial.
+1. Enable DHCP inside Pi-hole
+2. Disable DHCP on the Verizon CR1000A router
+3. Let Pi-hole hand out IP addresses and DNS settings
 
-I configured a real device on a real home network, ran into real router limitations, and solved the problem by changing the network design.
-
-Important real-world skills shown in this project:
-
-* Understanding how DNS and DHCP work together
-* Troubleshooting network connectivity issues
-* Documenting technical problems clearly
-* Using Linux as a network service host
-* Validating results with command-line tools
-* Building a working security lab from basic hardware
-
----
-
-## Next Steps
-
-Planned improvements:
-
-* Add more curated blocklists
-* Create local DNS records for home lab services
-* Add screenshots to this README
-* Export Pi-hole query data for analysis
-* Monitor top blocked domains
-* Add WireGuard VPN access to manage the lab remotely
-* Use Pi-hole logs later inside a SIEM project
-* Compare DNS traffic before and after adding more devices
-* Document common blocked domains and false positives
+This solved the problem because every device now receives the Raspberry Pi as its DNS server automatically.
 
 ---
 
@@ -847,15 +860,3 @@ Planned improvements:
 This project is running inside my own home network for learning purposes.
 
 I am not using this to monitor other people’s networks or bypass security controls. The purpose is to understand DNS, DHCP, and network filtering in a controlled lab environment.
-
----
-
-## Conclusion
-
-This Pi-hole project was my first real cybersecurity home lab project on the Raspberry Pi 5.
-
-It started as a simple DNS sinkhole install, but became a much better learning experience because of the problems I had to solve with SSH, static IP configuration, router limitations, DHCP migration, and DNS testing.
-
-The final result is a working network-wide DNS filtering system where all home devices route through Pi-hole, and blocked domains like `doubleclick.net` return `0.0.0.0`.
-
-This project gave me a strong foundation for the next home lab projects, including WireGuard VPN, Cowrie honeypot, Suricata IDS, ELK SIEM, Active Directory, and Zeek network monitoring.
