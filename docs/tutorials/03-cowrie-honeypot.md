@@ -20,6 +20,11 @@ Cowrie is an SSH/Telnet honeypot that simulates a Linux system. Attackers believ
 
 ## Diagram
 
+![Cowrie SSH Honeypot network diagram](../assets/diagrams/03-cowrie-topology.png)
+
+<details markdown="1">
+<summary>ASCII version</summary>
+
 ```text
 Internet
     |
@@ -39,6 +44,8 @@ JSON Logs      Text Logs
     |
 Custom Dashboard
 ```
+
+</details>
 
 ---
 

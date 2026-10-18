@@ -112,6 +112,11 @@ except much stronger cryptographically.
 
 Final working design:
 
+![WireGuard VPN Server network diagram](../assets/diagrams/02-wireguard-topology.png)
+
+<details markdown="1">
+<summary>ASCII version</summary>
+
 ```text
                     Internet
                         |
@@ -141,6 +146,8 @@ Final working design:
          v
    DNS Responses
 ```
+
+</details>
 
 Remote client flow:
 

@@ -41,6 +41,11 @@ This was not just a “copy and paste install.” I had to troubleshoot SSH, use
 
 Final working setup:
 
+![Pi-hole DNS Sinkhole network diagram](../assets/diagrams/01-pihole-topology.png)
+
+<details markdown="1">
+<summary>ASCII version</summary>
+
 ```text
                          Internet
                             |
@@ -60,6 +65,8 @@ Final working setup:
    Windows Laptop   Phone     Smart TV    Other Devices
       Client 1     Client 2   Client 3     Clients 4-5
 ```
+
+</details>
 
 ### How DHCP Works in This Setup
 
