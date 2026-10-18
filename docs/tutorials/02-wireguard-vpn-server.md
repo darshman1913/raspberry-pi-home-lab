@@ -490,19 +490,19 @@ Store screenshots here:
 
 ### Windows Connection
 
-![Windows WireGuard Connection](./wireguard-windows-connected.png)
+![Windows WireGuard Connection](../assets/screenshots/02-wireguard/wireguard-windows-connected.png)
 
 ### iPhone Connection
 
-![iPhone WireGuard Connection](./wireguard-iphone-connected.jpeg)
+![iPhone WireGuard Connection](../assets/screenshots/02-wireguard/wireguard-iphone-connected.jpeg)
 
 ### Pi-hole VPN Clients
 
-![Pi-hole VPN DNS Clients](./pihole-vpn-clients.png)
+![Pi-hole VPN DNS Clients](../assets/screenshots/02-wireguard/pihole-vpn-clients.png)
 
 ### wg show Output
 
-![WireGuard Status](./wg-show-output.png)
+![WireGuard Status](../assets/screenshots/02-wireguard/wg-show-output.png)
 
 ---
 

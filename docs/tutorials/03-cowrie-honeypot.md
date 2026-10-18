@@ -395,15 +395,15 @@ Store screenshots alongside the README.
 
 ## Dashboard
 
-![Cowrie Dashboard](./cowrie-dashboard.png)
+![Cowrie Dashboard](../assets/screenshots/03-cowrie/cowrie-dashboard.png)
 
 ## Attack Log Sample
 
-![Attack Log Sample](./attack-log-sample.png)
+![Attack Log Sample](../assets/screenshots/03-cowrie/attack-log-sample.png)
 
 ## Credential Attempts
 
-![Credential Attempts](./credential-attempts.png)
+![Credential Attempts](../assets/screenshots/03-cowrie/credential-attempts.png)
 
 ---
 
