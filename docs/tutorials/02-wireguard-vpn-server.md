@@ -69,21 +69,21 @@ Private Key
 Public Key
 ```
 
-##### Server
+#### Server
 
 ```text
 Server Private Key
 Server Public Key
 ```
 
-##### Windows Laptop
+#### Windows Laptop
 
 ```text
 Laptop Private Key
 Laptop Public Key
 ```
 
-##### iPhone
+#### iPhone
 
 ```text
 Phone Private Key
@@ -105,6 +105,8 @@ Private Key = password
 ```
 
 except much stronger cryptographically.
+
+Versions for this build are in [Versions and hardware](../reference/versions.md). IPs and ports are in the [Network map](../reference/network.md). Every command is in the [Command reference](../reference/commands.md).
 
 ---
 
@@ -454,19 +456,19 @@ Store screenshots here:
 └── wg-show-output.png
 ```
 
-#### Windows Connection
+### Windows Connection
 
 ![Windows WireGuard Connection](../assets/screenshots/02-wireguard/wireguard-windows-connected.png)
 
-#### iPhone Connection
+### iPhone Connection
 
 ![iPhone WireGuard Connection](../assets/screenshots/02-wireguard/wireguard-iphone-connected.jpeg)
 
-#### Pi-hole VPN Clients
+### Pi-hole VPN Clients
 
 ![Pi-hole VPN DNS Clients](../assets/screenshots/02-wireguard/pihole-vpn-clients.png)
 
-#### wg show Output
+### wg show Output
 
 ![WireGuard Status](../assets/screenshots/02-wireguard/wg-show-output.png)
 
@@ -693,101 +695,6 @@ Planned improvements:
 * Add multi-site VPN experiments
 * Explore split-tunnel configurations
 * Use WireGuard to securely manage future lab services
-
----
-
-## Lab Environment
-
-| Component           | Details                         |
-| ------------------- | ------------------------------- |
-| Hardware            | Raspberry Pi 5                  |
-| Operating System    | Raspberry Pi OS 64-bit (Debian) |
-| WireGuard Version   | 1.0.20210914                    |
-| Router              | Verizon CR1000A                 |
-| Server LAN IP       | 192.168.1.165                   |
-| VPN Tunnel Network  | 10.0.0.0/24                     |
-| WireGuard Server IP | 10.0.0.1                        |
-| Listen Port         | UDP 51820                       |
-| VPN DNS Server      | Pi-hole (192.168.1.165)         |
-| Routing Mode        | Full Tunnel                     |
-| Windows Client IP   | 10.0.0.2                        |
-| iPhone Client IP    | 10.0.0.3                        |
-| Public IP           | Redacted                        |
-| Remote Access       | WireGuard VPN                   |
-
----
-
-## Final Working Results
-
-| Item                    | Status |
-| ----------------------- | ------ |
-| WireGuard Running       | Yes    |
-| Port Forwarding Working | Yes    |
-| Laptop Client Connected | Yes    |
-| iPhone Client Connected | Yes    |
-| Full Tunnel Routing     | Yes    |
-| Pi-hole DNS Through VPN | Yes    |
-| SSH Through Tunnel      | Yes    |
-| Handshakes Verified     | Yes    |
-| Encryption Active       | Yes    |
-
----
-
-## Commands Reference
-
-#### Show Status
-
-```bash
-sudo wg show
-```
-
-#### Start WireGuard
-
-```bash
-sudo systemctl start wg-quick@wg0
-```
-
-#### Stop WireGuard
-
-```bash
-sudo systemctl stop wg-quick@wg0
-```
-
-#### Restart WireGuard
-
-```bash
-sudo systemctl restart wg-quick@wg0
-```
-
-#### Enable at Boot
-
-```bash
-sudo systemctl enable wg-quick@wg0
-```
-
-#### Check Service
-
-```bash
-sudo systemctl status wg-quick@wg0
-```
-
-#### Show IP Forwarding
-
-```bash
-sysctl net.ipv4.ip_forward
-```
-
-#### View Configuration
-
-```bash
-sudo cat /etc/wireguard/wg0.conf
-```
-
-#### Generate QR Code
-
-```bash
-qrencode -t ansiutf8 < iphone.conf
-```
 
 ---
 

@@ -16,6 +16,8 @@ This project deploys a Cowrie SSH honeypot on a Raspberry Pi 5 to collect and an
 
 Cowrie is an SSH/Telnet honeypot that simulates a Linux system. Attackers believe they are interacting with a real server, but every login attempt, command, and connection is recorded. The attacker never reaches the underlying Raspberry Pi operating system. Instead, they interact with a controlled fake environment designed for observation and analysis.
 
+Versions for this build are in [Versions and hardware](../reference/versions.md). IPs and ports are in the [Network map](../reference/network.md). Every command is in the [Command reference](../reference/commands.md).
+
 ---
 
 ## Diagram
@@ -428,68 +430,3 @@ Planned improvements:
 * Create attacker reputation scoring
 * Correlate repeated attacker behavior
 * Generate automated weekly threat reports
-
----
-
-## Lab Environment
-
-| Component       | Details                |
-| --------------- | ---------------------- |
-| Hardware        | Raspberry Pi 5         |
-| OS              | Raspberry Pi OS 64-bit |
-| Cowrie Version  | 3.0.3                  |
-| Python Version  | 3.13.5                 |
-| Hostname        | ubuntu-server          |
-| Router          | Verizon CR1000A        |
-| External Port   | 22                     |
-| Internal Port   | 2222                   |
-| Service Account | cowrie                 |
-| Startup Method  | systemd                |
-| Log Formats     | JSON + plaintext       |
-| Dashboard       | Custom HTML/JavaScript |
-
----
-
-## Commands Reference
-
-### Service Status
-
-```bash
-sudo systemctl status cowrie
-```
-
-### Start Service
-
-```bash
-sudo systemctl start cowrie
-```
-
-### Stop Service
-
-```bash
-sudo systemctl stop cowrie
-```
-
-### Restart Service
-
-```bash
-sudo systemctl restart cowrie
-```
-
-### Follow Logs
-
-```bash
-tail -f var/log/cowrie/cowrie.log
-```
-
-### JSON Events
-
-```bash
-tail -f var/log/cowrie/cowrie.json
-```
-
-### Switch to Cowrie User
-
-```bash
-sudo -u cowrie -s
-```
