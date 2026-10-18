@@ -53,7 +53,6 @@ This gives me a real environment to practice DNS, DHCP, Linux administration, ro
 | 🔜 Planned | 07 - Network Monitoring with Zeek | Network traffic analysis and protocol logging                        | Zeek, Linux, Network Logs                        | Coming soon                              |
 
 
-lets update
 ---
 
 ## Skills I Am Building
