@@ -87,6 +87,8 @@ Pi-hole DHCP Server
 Device now uses Pi-hole automatically
 ```
 
+How a DNS request moves through Pi-hole is in [How DNS filtering actually works](../explanation/how-dns-filtering-works.md). Why Pi-hole ended up running DHCP is in [Why Pi-hole took over DHCP](../explanation/why-pihole-runs-dhcp.md).
+
 ---
 
 ## Setup
@@ -667,51 +669,3 @@ Planned improvements:
 * Use Pi-hole logs later inside a SIEM project
 * Compare DNS traffic before and after adding more devices
 * Document common blocked domains and false positives
-
----
-
-## How DNS Works in This Setup
-
-```text
-Home Device
-   |
-   | DNS request
-   v
-Pi-hole on Raspberry Pi 5
-   |
-   | If domain is blocked:
-   | returns 0.0.0.0
-   |
-   | If domain is allowed:
-   v
-Cloudflare DNS 1.1.1.1
-   |
-   v
-Internet
-```
-
----
-
-## Why Pi-hole Is Also Running DHCP
-
-Originally, I wanted the Verizon CR1000A router to keep handling DHCP while simply pointing all devices to Pi-hole for DNS.
-
-That did not work properly.
-
-The router did not give me reliable control over custom DNS settings for client devices. Even after changing settings, devices were still not consistently using Pi-hole for DNS.
-
-The workaround was to:
-
-1. Enable DHCP inside Pi-hole
-2. Disable DHCP on the Verizon CR1000A router
-3. Let Pi-hole hand out IP addresses and DNS settings
-
-This solved the problem because every device now receives the Raspberry Pi as its DNS server automatically.
-
----
-
-## Security Notes
-
-This project is running inside my own home network for learning purposes.
-
-I am not using this to monitor other people’s networks or bypass security controls. The purpose is to understand DNS, DHCP, and network filtering in a controlled lab environment.

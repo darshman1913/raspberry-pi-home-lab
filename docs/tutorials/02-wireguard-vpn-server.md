@@ -171,6 +171,8 @@ Pi-hole DNS
 Home Network Resources
 ```
 
+Security notes for this project are in [Explanation](../explanation/index.md#security-notes).
+
 ---
 
 ## Setup
@@ -695,28 +697,3 @@ Planned improvements:
 * Add multi-site VPN experiments
 * Explore split-tunnel configurations
 * Use WireGuard to securely manage future lab services
-
----
-
-## Security Notes
-
-Never share:
-
-* Private keys
-* Full WireGuard configs
-* Public IP address
-* Router login screenshots
-* QR codes after deployment
-
-Safe to share:
-
-* Public keys
-* Redacted configs
-* Tunnel IPs
-* Network diagrams
-
-If a private key is exposed:
-
-1. Generate a new keypair
-2. Update peer configuration
-3. Remove compromised key immediately
