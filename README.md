@@ -3,6 +3,8 @@
 ![Platform](https://img.shields.io/badge/Platform-Raspberry%20Pi%205-red)
 ![License](https://img.shields.io/badge/License-MIT-blue)
 
+**Docs site:** [darshman1913.github.io/raspberry-pi-home-lab](https://darshman1913.github.io/raspberry-pi-home-lab/)
+
 
 ## Cybersecurity & Networking Home Lab
 
@@ -42,16 +44,15 @@ This gives me a real environment to practice DNS, DHCP, Linux administration, ro
 
 | Status     | Project                           | Description                                                          | Key Tools                                        | Link                                     |
 | ---------- | --------------------------------- | -------------------------------------------------------------------- | ------------------------------------------------ | ---------------------------------------- |
-| ✅ Done     | 01 - Pi-hole DNS Sinkhole         | Network-wide DNS filtering and DHCP setup using Raspberry Pi 5       | Pi-hole, Raspberry Pi OS, Linux, Verizon CR1000A | [View Project](./01-pihole-dns-sinkhole) |
-| ✅ Done     | 02 - WireGuard VPN Server         | Secure remote access into the home lab network                       | WireGuard, Linux, UDP, Port Forwarding           | [View Project](./02-wireguard-vpn-server) |
-| ✅ Done     | 03 - Honeypot with Cowrie         | SSH honeypot to study attacker behavior and collect logs safely      | Cowrie, Python, SSH, Linux Logs                  | [View Project](./03-cowrie-honeypot)                              |
+| ✅ Done     | 01 - Pi-hole DNS Sinkhole         | Network-wide DNS filtering and DHCP setup using Raspberry Pi 5       | Pi-hole, Raspberry Pi OS, Linux, Verizon CR1000A | [View Project](./docs/tutorials/01-pihole-dns-sinkhole.md) |
+| ✅ Done     | 02 - WireGuard VPN Server         | Secure remote access into the home lab network                       | WireGuard, Linux, UDP, Port Forwarding           | [View Project](./docs/tutorials/02-wireguard-vpn-server.md) |
+| ✅ Done     | 03 - Honeypot with Cowrie         | SSH honeypot to study attacker behavior and collect logs safely      | Cowrie, Python, SSH, Linux Logs                  | [View Project](./docs/tutorials/03-cowrie-honeypot.md)                              |
 | 🔜 Planned | 04 - IDS with Suricata            | Intrusion detection system for monitoring suspicious network traffic | Suricata, PCAP, Rules, Alerts                    | Coming soon                              |
 | 🔜 Planned | 05 - Centralized SIEM             | Central log collection and dashboarding for lab security events      | ELK Stack, Elasticsearch, Logstash, Kibana       | Coming soon                              |
 | 🔜 Planned | 06 - Active Directory Lab         | Windows domain lab for learning enterprise identity and security     | Windows Server, AD DS, DNS, Group Policy         | Coming soon                              |
 | 🔜 Planned | 07 - Network Monitoring with Zeek | Network traffic analysis and protocol logging                        | Zeek, Linux, Network Logs                        | Coming soon                              |
 
 
-lets update
 ---
 
 ## Skills I Am Building
@@ -114,29 +115,37 @@ I want this repository to show my progress over time, from basic networking proj
 ```text
 raspberry-pi-home-lab/
 │
+├── .github/workflows/
+│   └── docs.yml                  # builds and publishes the site
+│
+├── docs/                         # Zensical docs site source
+│   ├── index.md
+│   ├── tutorials/                # full project writeups
+│   │   ├── 01-pihole-dns-sinkhole.md
+│   │   ├── 02-wireguard-vpn-server.md
+│   │   └── 03-cowrie-honeypot.md
+│   ├── how-to/                   # one task per page
+│   ├── reference/                # network map, versions, commands
+│   ├── explanation/              # why things work the way they do
+│   ├── decisions/                # decision log
+│   └── assets/
+│       ├── diagrams/             # .py diagram sources + rendered .png
+│       └── screenshots/
+│           ├── 01-pihole/
+│           ├── 02-wireguard/
+│           └── 03-cowrie/
+│
 ├── 01-pihole-dns-sinkhole/
-│   ├── README.md
-│   ├── screenshots/
-│   └── notes.md
+│   └── README.md                 # stub, points at the docs site
 │
 ├── 02-wireguard-vpn-server/
-│   └── README.md
+│   └── README.md                 # stub, points at the docs site
 │
 ├── 03-cowrie-honeypot/
-│   └── README.md
+│   ├── README.md                 # stub, points at the docs site
+│   └── cowrie-full.json          # raw Cowrie JSON log export
 │
-├── 04-suricata-ids/
-│   └── README.md
-│
-├── 05-elk-siem/
-│   └── README.md
-│
-├── 06-active-directory-lab/
-│   └── README.md
-│
-├── 07-zeek-network-monitoring/
-│   └── README.md
-│
+├── zensical.toml                 # site config
 └── README.md
 ```
 
